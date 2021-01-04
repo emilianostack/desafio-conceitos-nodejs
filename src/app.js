@@ -32,7 +32,7 @@ app.get("/repositories", (request, response) => {
   const repo = []
   repositories.map(repository => {
     repo.push({
-      repository,
+      ...repository,
       like: likes.filter(lk => { return lk.id === repository.id }).length || 0
     })
   })

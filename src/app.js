@@ -21,8 +21,8 @@ function validateId(request, response, next) {
 
 function existsId(request, response, next) {
   const {id} = request.params
-
-  if (repositories.findIndex(repository => {return repository.id === id})) {
+  console.log(repositories.find(repository => {return repository.id === id}))
+  if (repositories.find(repository => {return repository.id === id}) === "") {
     return response.status(400).json({"message": "Id not found!"})
   }
 
@@ -67,9 +67,9 @@ app.put("/repositories/:id", validateId, existsId, (request, response) => {
 app.delete("/repositories/:id", validateId, existsId, (request, response) => {
   const { id }  = request.params
 
-  const index = repositories.indexOf(id)
-  repositories.splice(index)
-
+  const index = repositories.findIndex(repository => {return repository.id === id})
+  repositories.splice(index, 1)
+  console.log(repositories)
   return response.status(204).json({})
 
 });
